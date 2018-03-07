@@ -38,11 +38,11 @@ public class Garp extends Actor
             move(-5);
         }
         if(Greenfoot.isKeyDown("up")){
-            if(getImage() == imageLeft){
-                setImage(imageRight);
+            if(getImage() == imageRight){
+                setImage(imageLeft);
             }
-            setRotation(-90);
-            move(5);
+            setRotation(90);
+            move(-5);
         }
         else if(Greenfoot.isKeyDown("down")){
             if(getImage() == imageLeft){
