@@ -36,6 +36,8 @@ public class Gnomus extends Actor
                 setRotation(getRotation() - Greenfoot.getRandomNumber(180));
             }
         }
+        lookForGarp();
+        lookForActor();
     }
     protected boolean atWorldEdge(){
         int x, i, y, wx, wy;
@@ -62,4 +64,21 @@ public class Gnomus extends Actor
         }
         return false;
     }
+    protected void lookForActor(){
+        Actor actor;
+        actor = getOneObjectAtOffset(0,0, Actor.class);
+        if(actor != null){
+            turn(90);
+        }
+    }
+    protected void lookForGarp(){
+        Actor garp;
+        garp = getOneObjectAtOffset(1,1, Garp.class);
+        if(garp != null){
+            Greenfoot.playSound("scream.mp3");
+            getWorld().removeObject(garp);
+            Greenfoot.stop();
+        }
+    }
 }
+

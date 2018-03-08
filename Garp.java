@@ -23,12 +23,20 @@ public class Garp extends Actor
      */
     public void act() 
     {
+        movingAndTurning();
+        collectingDiamonds();
+        foundBomb();
+    }
+    protected void movingAndTurning(){
         if(Greenfoot.isKeyDown("right" )){
             if(getImage() == imageLeft){
                 setImage(imageRight);
             }
             setRotation(0);
             move(5);
+            if(foundRock()){
+                move(-5);
+            }
         }
         else if(Greenfoot.isKeyDown("left")){
             if(getImage() == imageRight){
@@ -36,6 +44,9 @@ public class Garp extends Actor
             }
             setRotation(0);
             move(-5);
+            if(foundRock()){
+                move(5);
+            }
         }
         if(Greenfoot.isKeyDown("up")){
             if(getImage() == imageRight){
@@ -43,6 +54,9 @@ public class Garp extends Actor
             }
             setRotation(90);
             move(-5);
+            if(foundRock()){
+                move(5);
+            }
         }
         else if(Greenfoot.isKeyDown("down")){
             if(getImage() == imageLeft){
@@ -50,6 +64,37 @@ public class Garp extends Actor
             }
             setRotation(90);
             move(5);
+            if(foundRock()){
+                move(-5);
+            }
+        }
+    }
+    protected void collectingDiamonds(){
+        Actor diamond;
+        World world;
+        
+        diamond = getOneObjectAtOffset(0, 0, Diamond.class);
+        if(diamond != null){
+            world = getWorld();
+            world.removeObject(diamond);
+        }
+    }
+    protected boolean foundRock(){
+        Actor rock;
+        rock = getOneObjectAtOffset(0,0, Rock.class);
+        if(rock != null){
+            return true;
+        }
+        return false;
+    }
+    public void foundBomb(){
+        Actor bomb;
+        
+        bomb = getOneObjectAtOffset(0,0, Bomb.class);
+        if (bomb != null){
+            getWorld().removeObject(bomb);
+            getWorld().addObject(new Explosion(), getX(), getY());
+            getWorld().removeObject(this);
         }
     }
 }
